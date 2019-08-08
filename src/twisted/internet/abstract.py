@@ -371,6 +371,9 @@ class FileDescriptor(_ConsumerMixin, _LogOwner):
         streaming producer is registered, it will be paused until the buffered
         data is written to the underlying file descriptor.
         """
+        for idx, i in enumerate(iovec):
+            if isinstance(i, unicode):
+                iovec[idx] = i.encode("utf-8")
         for i in iovec:
             if isinstance(i, unicode): # no, really, I mean it
                 raise TypeError("Data must not be unicode")
